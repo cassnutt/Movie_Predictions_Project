@@ -1,64 +1,105 @@
-# Phase 1 Project
+# Project Name:
 
-You've made it all the way through the first phase of this course - take a minute to celebrate your awesomeness!
+Microsoft Movie Analysis
 
-![awesome](https://raw.githubusercontent.com/learn-co-curriculum/dsc-phase-1-project/master/awesome.gif)
+# Project Description:
 
-Now you will put your new skills to use with a large end-of-Phase project! This project should take 20 to 30 hours to complete.
+Here I analyzed movie and video game data to generate a few recommendations for Microsoft's new interest in movie making.
 
-## Project Overview
+# Data Used:
 
-For this project, you will use exploratory data analysis to generate insights for a business stakeholder.
-
-### Business Problem
-
-Microsoft sees all the big companies creating original video content and they want to get in on the fun. They have decided to create a new movie studio, but they don’t know anything about creating movies. You are charged with exploring what types of films are currently doing the best at the box office. You must then translate those findings into actionable insights that the head of Microsoft's new movie studio can use to help decide what type of films to create.
-
-### The Data
-
-In the folder `zippedData` are movie datasets from:
-
+Data comes from 4 different files:
+* IMDb (x2)
 * Box Office Mojo
-* IMDB
-* Rotten Tomatoes
-* TheMovieDB.org
+* The Numbers
 
-It is up to you to decide what data from this to use and how to use it. If you want to make this more challenging, you can scrape websites or make API calls to get additional data. If you are feeling overwhelmed or behind (e.g. struggled with the Phase 1 Code Challenge), we recommend you use only the following data files:
+And Wikipedia:
+* https://en.wikipedia.org/wiki/List_of_best-selling_Xbox_One_video
 
-* imdb.title.basics
-* imdb.title.ratings
-* bom.movie_gross
+**Data can be found in the zippedData folder.**
 
-## Deliverables
+### When is the best time to release a movie?
 
-There are three deliverables for this project:
+For this analysis I used data from The Numbers. There were no missing values, but I did have to convert the $ amounts to integers and change the dates to datetime. After that analysis was fairly straight-forward. 
 
-* A **GitHub repository**
-* A **Jupyter Notebook**
-* A **non-technical presentation**
+I looked at the month that has the most new releases. I wondered if that was just a popular month to release a movie, or if the movies were released then because they would make more money.
+I analyzed the release month against it's gross product (domestic and worldwide). I also checked the average worldwide gross by the month the movie was released in. After not being able to see, I eliminated about 400 of the highest grossing movies to look carefully at the analysis.
 
-Review the "Project Submission & Review" page in the "Milestones Instructions" topic for instructions on creating and submitting your deliverables. Refer to the rubric associated with this assignment for specifications describing high-quality deliverables.
 
-### Key Points
+**Key Findings:**
 
-* **Your analysis should yield three concrete business recommendations.** The ultimate purpose of exploratory analysis is not just to learn about the data, but to help an organization perform better. Explicitly relate your findings to business needs by recommending actions that you think the business (Microsoft) should take.
+More movies are released in December than any other month.
+Movies released it December can make a lot of money.
+However, the average movie released in May and June make more money than ones released in other months once the outliers are taken into account.
 
-* **Communicating about your work well is extremely important.** Your ability to provide value to an organization - or to land a job there - is directly reliant on your ability to communicate with them about what you have done and why it is valuable. Create a storyline your audience (the head of Microsoft's new movie studio) can follow by walking them through the steps of your process, highlighting the most important points and skipping over the rest.
+Interestingly, the more outliers (~600 instead of 400) that are removed, the less successful May gets. June, July and November really begin to shine with December not far behind. May shrinks to be on par with most other months.
 
-* **Use plenty of visualizations.** Visualizations are invaluable for exploring your data and making your findings accessible to a non-technical audience. Spotlight visuals in your presentation, but only ones that relate directly to your recommendations. Simple visuals are usually best (e.g. bar charts and line graphs), and don't forget to format them well (e.g. labels, titles).
+The image below shows May and June having the largest span when measuring a movie's worldwide gross by it's release month.
 
-## Getting Started
+![most profitable_films](images/Month-average.png)
 
-Please start by reviewing this assignment, the rubric at the bottom of it, and the "Project Submission & Review" page. If you have any questions, please ask your instructor ASAP.
+### What are the top 15 highest grossing films and which studios made them?
 
-Next, we recommend you check out [the Phase 1 Project Templates and Examples repo](https://github.com/learn-co-curriculum/dsc-project-template) and use the MVP template for your project.
+To accomplish this analysis, I needed to merge three different files together.
+While merging, I was doing some data cleaning. The data types were correct, but there were quite a few missing values and duplicates. 
 
-Alternatively, you can fork [the Phase 1 Project Repository](https://github.com/learn-co-curriculum/dsc-phase-1-project), clone it locally, and work in the `student.ipynb` file. Make sure to also add and commit a PDF of your presentation to your repository with a file name of `presentation.pdf`.
+After cleaning those out, I was able to graph the 15 highest grossing movies (based on domestic gross) and see what their average review. Then I looked at the studios that made the movies in that top 15.
 
-## Project Submission and Review
+The image below shows the average reviews for the top 15 highest domestic grossing movies.
 
-Review the "Project Submission & Review" page in the "Milestones Instructions" topic to learn how to submit your project and how it will be reviewed. Your project must pass review for you to progress to the next Phase.
+![average_ratings_top_15](images/avg_ratings.png)
 
-## Summary
+**Key Findings:**
 
-This project will give you a valuable opportunity to develop your data science skills using real-world data. The end-of-phase projects are a critical part of the program because they give you a chance to bring together all the skills you've learned, apply them to realistic projects for a business stakeholder, practice communication skills, and get feedback to help you improve. You've got this!
+Three of the movies had average reviews of 8 or higher. Most of the movies were between 7 and 8. The lowest rated film went to Jurassic World: Fallen Kingdom at 6.2.
+
+Of the 15 highest grossing movies, BV (AKA Buena Vista AKA Disney) made 10 of them. If Microsoft is looking for some guidance on how to make a hit, it could take a lesson from Disney.
+
+### Which genre could generate the most profit?
+
+In this analysis, I used a file that I had already cleaned up (from the first analysis). I calculated the return on investment (or ROI) to see where the profits were. Some movies were on this list that had been released, but did not have any data. I wasn't interested in that so I removed any entries that had "0" in the "worldwide gross" column. I also filtered out movies that were made more than 10 years ago. I wanted to be looking at more recent data that wouldn't skew any results.
+
+I merged the file that had the genre information and again cleaned the data by removing the duplicates. From here I had to split the genres into separate columns.
+
+**It is important to note here that if there were multiple genres, the genres were listed in alphabetical order and not by their primary category. Therefore, the analysis was done on all three columns to see the whole picture.**
+
+An analysis was done to see if the genres at the end of the alphabet would increase because they were not listed first. Then trends over the 3 visualizations were noted.
+
+Taking it a step further, I then looked at the total ROI for each genre and the average ROI for each genre.
+
+**Key Findings:**
+
+Mystery and Horror are great genres if you are looking to make the biggest profit. Animation also ranks high on all of the graphs. Showing that whether animation is the only genre listed, or if it fits in with multiple genres, it tends to make a decent profit.
+
+The image below shows the genres, and their respective ROI's.
+
+(Some movies had one or more than one listed genre. Thus, three separate charts.)
+
+![genres_and_roi](images/genre--roi.png)
+
+### How do Movies and Microsoft Go Together?
+
+I wanted to think about how Microsoft's successful video games could be leveraged to create a film. I used data from Wikipedia and looked specifically at the top selling Xbox One games.
+
+The data was fairly clean, but I still had to adjust column names and change the data types for the columns release date and copies sold. 
+
+Once the columns were in order, I looked at how many of the top selling games were made my Microsoft. I added a column to show if the game was or was not made by Microsoft Studios. With that I was able to graph the copies sold based on the year it was released while also showing if it was made by Microsoft or not. I also ranked Microsoft Studios games by their highest sales and the year they were released. 
+
+**Key Findings:**
+
+Of the 32 games, Microsoft has made 12 of them. Microsoft had some okay sales that have been big hits, and you can see that the trend of games made by Microsoft is going up. 
+
+Another graph shows the game that sold the most copies was also newest. This game, or other top selling games could be inspiration for Microsoft to create an instant hit and generate more revenue back into their video game market.
+
+The graphic below shows the 32 top selling Xbox One games ranked by their year of release and the copies sold. The color difference shows if the game was or was not made by Microsoft Studios.
+
+![Microsoft_sales_img](images/Microsoft-top-selling.png)
+
+# Summary:
+
+After an analysis of data files about previous movie sales and video game sales, I came to the following conclusions:
+
+* June is a good month to release a film
+* Disney made two-thirds of the top 15 grossing movies
+* Mystery / Horror / Thriller movies generate the most return on investment
+* Microsoft can look at their top selling Xbox games for film inspiration and increase revenue in multiple markets.
