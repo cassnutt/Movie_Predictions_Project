@@ -4,7 +4,7 @@ Microsoft Movie Analysis
 
 # Project Description:
 
-Here I analyzed movie and video game data to generate a few recommendations for Microsoft's new interest in movie making.
+An analysis of movie and video game data to generate a few recommendations for Microsoft's new interest in movie making.
 
 # Data Used:
 
@@ -102,4 +102,4 @@ After an analysis of data files about previous movie sales and video game sales,
 * June is a good month to release a film
 * Disney made two-thirds of the top 15 grossing movies
 * Mystery / Horror / Thriller movies generate the most return on investment
-* Microsoft can look at their top selling Xbox games for film inspiration and increase revenue in multiple markets.
+* Microsoft can look at their top selling Xbox games for film inspiration and increase revenue in multiple markets
